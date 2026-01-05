@@ -1,77 +1,427 @@
-# 심바이오 (SymBio)
+# 프로젝트 소개
 
-**프로젝트 소개**
+# 📌 프로젝트 개요
 
-"심바이오"는 언리얼 엔진을 기반으로 제작된 FPS 슈팅 게임으로, 극한의 생존을 위해 인간과 심바이오가 정신적, 신체적으로 융합된 생존자의 이야기를 담고 있으며, 플레이어는 제한된 자원과 능력 속에서 살아남아 자신의 정체성을 지켜내야 합니다.
+"**SymBio**"는 언리얼 엔진 기반으로 제작된 1인칭 FPS 게임으로, 극한의 생존을 위해 인간과 SymBio가 정신적·신체적으로 융합된 세계관을 담고 있습니다. 플레이어는 제한된 자원과 능력 속에서 전투와 생존을 동시에 수행해야 합니다.
 
-**비디오**
-<img width="1909" height="1064" alt="image" src="https://github.com/user-attachments/assets/8ecae2ff-7121-41fc-b447-b92fac85a695" />
-https://www.youtube.com/watch?v=2nxZ4AfdJa8
+# 🎮 게임 개발
+> 
+> - **인원**: 4인 개발  
+> - **기간**: 25.02.17 ~ 25.03.07
+> - **목적**: 언리얼 엔진의 **Gameplay Framework**와 **Component 기반 구조**를 이해하고, C++과 Blueprint 기반으로 FPS 게임의 핵심 시스템(무기, 캐릭터, 데미지)을 직접 구현하는 경험을 목표로 함.
+> - **기술**: - C++, Unreal Engine 5.5, Blueprint, Git, Slack, Rider/Visual Studio
+</aside>
 
-**프로젝트 개요 및 개발 일정**
+## 🖼 In-Game Screenshot
 
-- **프로젝트 명:** 심바이오 (SymBio)
-- **개발 기간:** 2025.02.17 ~ 2025.03.07
-- **협업 도구:** 노션, 슬랙 등을 통해 일정 및 이슈 관리
-- **스토리 배경:**
-2047년, 국제 생명공학 극비 프로젝트 "에볼루션 심 네트워크"가 시작되며, 첫 번째 실험은 대다수 실패로 끝났지만 단 한 명의 생존자가 심바이오와 융합해 도망쳤습니다. 이후 2차 실험에서 2%의 생존자가 심바이오와 정신적 공생 상태를 유지하게 되는데, 바로 당신이 그 생존자입니다.
+![alt text](image-1.png)
+![alt text](image-2.png)
+---
 
-**팀원 및 역할**
+# **Core System Implementation**
 
-- **한경식:**
-    - 프로젝트 구조 설계, 플레이어 시스템(무기, 애니메이션 등) 및 게임플레이 코어 담당
-- **차정민:**
-    - 기획, UI/UX 설계, BGM/SFX 제작, 레벨 디자인, 시네마틱 컷씬 등 UI 및 게임 어센틱 담당
-- **한가윤:**
-    - 적 AI, 보스 상호작용 등 적 몬스터 요소 및 전투 시스템 담당
-- **최명일:**
-    - 인벤토리, 게임 상태 관리 및 게임 진행 로직 담당
+## 🔫 **Weapon System**
 
-**게임 컨셉**
+### ✔ 설계 의도
 
-- **생존의 투쟁:** 제한된 아이템, 생명력(HP), 그리고 의지력(MP)을 관리하며 극한의 환경에서 살아남아야 합니다.
-- **초인적인 힘:** 심바이오의 변형 능력을 활용하여 다양한 형태의 무기(검, 채찍, 방패 등)를 생성하고, 강력한 공격과 방어를 수행합니다.
-- **의지력의 한계:** 의지력 소진 시 폭주 상태에 진입하는 등, 자원 관리의 긴장감과 전략적 선택이 중요한 요소로 작용합니다.
+- 무기 종류에 따른 로직 중복을 줄이고 유지 보수성을 높이기 위해 **Weapon Base Class(ACWeapon)**를 설계하여 공통 기능을 통합하여 코드 재사용성 향상
+- 장착/조준/발사/재장전/피격 연출 등 무기의 필수 기능을 하나의 베이스에서 일관성 있게 관리하여 무기 확장에 용이
+- 각 무기 별 필요 기능은 Override로 구성할 수 있도록 설계하여 시스템 전체의 안정성 확보
 
-**주요 기능 (필수 기능 가이드)**
+### ✔ 구현 내용
 
-1. **캐릭터 이동 및 상태 변화**
-    - 키보드( WASD, Shift, Space, Ctrl/C )와 마우스를 활용한 자연스러운 이동 및 시점 조작
-    - 걷기, 달리기, 점프, 앉기 등의 기본 동작과 각 동작에 따른 애니메이션 및 충돌 크기 조정
-2. **무기 발사 및 데미지 처리**
-    - 최소 1종 이상의 무기를 구현하여, 히트스캔 또는 물리 탄환 기반의 발사 방식
-    - 데미지, 발사 속도, 장탄수, 재장전 시간 등 무기별 속성 구현 및 탄창 단위 재장전 시스템 도입
-3. **적 AI**
-    - 플레이어 탐지, 추적, 사격 등 기본 AI 행동 패턴 및 NavMesh를 통한 이동 경로 탐색
-    - 체력, 방어력, 피격 및 사망 처리 로직 구현
-4. **게임 모드**
-    - 게임 시작과 종료 조건, 점수 시스템(적 처치, 보너스 점수) 및 게임 오버/클리어 조건 설정
-    - 플레이어 사망, 제한 시간 초과 등 다양한 미션 실패 조건 반영
-5. **UI 시스템**
-    - 전투 HUD: 플레이어 체력바, 무기 및 탄약 정보, 크로스헤어 등
-    - 게임 진행 정보: 현재 점수, 킬 카운트, 미션 목표 및 진행 상황, 피해/킬 로그 표시
+- 장착/해제, 왼손 그립 위치, 장착 애니메이션/사운드 등 **무기 장착 시스템 통합**
+- 코드
+    
+    ```cpp
+    bool ACWeapon::CanEquip()
+    {
+    	bool b = false;
+    	b |= bEquipping;
+    	b |= bReload;
+    	b |= bFiring;
+    	b |= State->IsInventoryMode() == true;
+    
+    	return !b;
+    }
+    
+    void ACWeapon::Equip()
+    {
+    	bEquipping = true;
+    	if (State == nullptr)
+    		return;
+    	if (Camera != nullptr)
+    		Camera->EnableControlRotation();
+    
+    	State->SetEquipMode();
+    	if (EquipSound != nullptr)
+    		UGameplayStatics::SpawnSoundAtLocation(OwnerCharacter->GetWorld(), EquipSound, FVector::ZeroVector, FRotator::ZeroRotator);
+    
+    	if (EquipMontage == nullptr)
+    	{
+    		BeginEquip();
+    		EndEquip();
+    		return;
+    	}
+    
+    	OwnerCharacter->PlayAnimMontage(EquipMontage, Equip_PlayRate);
+    }
+    
+    void ACWeapon::BeginEquip()
+    {
+    	if (RightHandSokcetName.IsValid())
+    		AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), RightHandSokcetName);
+    }
+    
+    void ACWeapon::EndEquip()
+    {
+    	bEquipping = false;
+    	State->SetIdleMode();
+    }
+    ```
+    
+- 카메라 FOV, 암 길이, 소켓 오프셋을 조절하는 **조준(Aim) 시스템 구현 (Timeline + Curve 기반)**
+- 코드
+    
+    ```cpp
+    bool ACWeapon::CanAim()
+    {
+    	bool b = false;
+    	b |= bEquipping;
+    	b |= bReload;
+    	b |= bFiring;
+    	b |= Weapon->IsKnifeMode() == true;
+    	b |= Weapon->IsGrenadeMode() == true;
+    	return !b;
+    }
+    
+    void ACWeapon::BeginAim()
+    {
+    	ACPlayer* Player = Cast<ACPlayer>(OwnerCharacter);
+    	if (!Player)
+    		return;
+    	bInAim = true;
+    	if (BreathSoundComponent != nullptr && BreathSoundComponent->IsActive())
+    		BreathSoundComponent->Stop();
+    	if (BreathSound != nullptr)
+    		BreathSoundComponent = UGameplayStatics::SpawnSoundAtLocation(GetWorld(), BreathSound, OwnerCharacter->GetActorLocation());
+    	if (AimCurve != nullptr)
+    	{
+    		Timeline->PlayFromStart();
+    		AimData.SetData(OwnerCharacter);
+    		return;
+    	}
+    	AimData.SetDataByNoneCurve(OwnerCharacter);
+    }
+    
+    void ACWeapon::EndAim()
+    {
+    	if (bInAim == false)
+    		return;
+    	bInAim = false;
+    	if(BreathSoundComponent != nullptr && BreathSoundComponent->IsActive())
+    		BreathSoundComponent->Stop();
+    	if (BreathSound2 != nullptr)
+    		BreathSoundComponent = UGameplayStatics::SpawnSoundAtLocation(GetWorld(), BreathSound2, OwnerCharacter->GetActorLocation());
+    	if (AimCurve != nullptr)
+    	{
+    		Timeline->PlayFromStart();
+    		BaseData.SetData(OwnerCharacter);
+    		return;
+    	}
+    	BaseData.SetDataByNoneCurve(OwnerCharacter);
+    }
+    
+    void ACWeapon::OnAiming(float Output)
+    {
+    	UCameraComponent* camera = Cast<UCameraComponent>(OwnerCharacter->GetComponentByClass(UCameraComponent::StaticClass()));
+    	camera->FieldOfView = FMath::Lerp(AimData.FieldOfView, BaseData.FieldOfView, Output);
+    }
+    
+    ```
+    
+- 단발/자동 사격, 반동(Recoil), 카메라 셰이크 등 **발사 시스템 전반 처리**
+- 코드
+    
+    ```cpp
+    void ACWeapon::BeginFire()
+    {
+    	bFiring = true;
+    
+    	State->SetActionMode();
+    	if (bAutoFire == true)
+    	{
+    		GetWorld()->GetTimerManager().SetTimer(AutoFireHandle, this, &ACWeapon::OnFireing, AutoFireInterval, true, 0);
+    		return;
+    	}
+    
+    	OnFireing();
+    }
+    
+    void ACWeapon::EndFire()
+    {
+    	if (bFiring == false)
+    		return;
+    	if (GetWorld()->GetTimerManager().IsTimerActive(AutoFireHandle))
+    		GetWorld()->GetTimerManager().ClearTimer(AutoFireHandle);
+    	State->SetIdleMode();
+    	bFiring = false;
+    }
+    
+    void ACWeapon::OnFireing()
+    {
+    	if (FireMontage != nullptr)
+    		OwnerCharacter->PlayAnimMontage(FireMontage, FireRate);
+    	UCameraComponent* camera = Cast<UCameraComponent>(OwnerCharacter->GetComponentByClass(UCameraComponent::StaticClass()));
+    	FTransform transform{};
+    	FVector direction{};
+    	if (camera == nullptr)
+    	{
+    		transform = Mesh->GetSocketTransform("Muzzle_Bullet");//camera->GetComponentToWorld();
+    		direction = transform.GetRotation().GetUpVector();//camera->GetForwardVector();
+    	}
+    	else
+    	{
+    		direction = camera->GetForwardVector();
+    		transform = camera->GetComponentToWorld();
+    	}
+    
+    	FVector start = transform.GetLocation() + direction;
+    
+    	direction = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(direction, RecoilAngle);
+    
+    	FVector end = transform.GetLocation() + direction * HitDistance;
+    
+    	TArray<AActor*> ignores;
+    	FHitResult hitResult;
+    
+    	UKismetSystemLibrary::LineTraceSingle(GetWorld(), start, end, ETraceTypeQuery::TraceTypeQuery1, false, ignores, Debug, hitResult, true, DebugColor);
+    	if (hitResult.bBlockingHit == true)
+    	{
+    		if (HitDecal != nullptr)
+    		{
+    			FRotator rotator = hitResult.ImpactNormal.Rotation();
+    			UDecalComponent* decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), HitDecal, HitDecalSize, hitResult.Location, rotator, HitDecalLifeTime);
+    			decal->SetFadeScreenSize(0);
+    		}
+    		if (HitParticle != nullptr)
+    		{
+    			FRotator rotator = UKismetMathLibrary::FindLookAtRotation(hitResult.Location, hitResult.TraceStart);
+    			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticle, hitResult.Location, rotator);
+    		}
+    	}
+    
+    	if (FlashParticle != nullptr)
+    		UGameplayStatics::SpawnEmitterAttached(FlashParticle, Mesh, "Muzzle", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+    	if (EjectParticle != nullptr)
+    		UGameplayStatics::SpawnEmitterAttached(EjectParticle, Mesh, "Eject", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+    	FVector muzzleLocation = Mesh->GetSocketLocation("Muzzle");
+    	if (FireSound != nullptr)
+    		UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, OwnerCharacter->GetMesh()->GetSocketLocation(L"pelvis"), OwnerCharacter->GetActorRotation(), 5);
+    	if (CameraShak != nullptr)
+    	{
+    
+    		APlayerController* controller = Cast<APlayerController>(OwnerCharacter->GetController());
+    		if (controller != nullptr)
+    		{
+    			if (bInAim == true && AimCameraShak != nullptr)
+    				controller->PlayerCameraManager->StartCameraShake(AimCameraShak,1,ECameraShakePlaySpace::UserDefined);
+    			else
+    				controller->PlayerCameraManager->StartCameraShake(CameraShak, 1, ECameraShakePlaySpace::UserDefined);
+    		}
+    	}
+    
+    	OwnerCharacter->AddControllerPitchInput(-RecoilRate * UKismetMathLibrary::RandomFloatInRange(0.8f, 1.2f));
+    
+    	if (BulletClass != nullptr)
+    	{
+    		FVector location = Mesh->GetSocketLocation("Muzzle_Bullet");
+    		FActorSpawnParameters param;
+    		param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    
+    		ACBullet* bullet = GetWorld()->SpawnActor<ACBullet>(BulletClass, location, direction.Rotation(), param);
+    		bullet->OnHit.AddDynamic(this, &ACWeapon::OnBullet);
+    		if (bullet != nullptr)
+    			bullet->Shoot(direction);
+    	}
+    
+    	if (CurrentMagazineCount > 1)
+    		CurrentMagazineCount--;
+    	else
+    	{
+    		CurrentMagazineCount--;
+    		if (CanReload() == true)
+    			Reload();
+    	}
+    }
+    
+    ```
+    
+- 탄창 배출·장전·탄 수 관리 등 **탄창/재장전(Load/Unload) 시스템 구성**
+- 코드
+    
+    ```cpp
+    bool ACWeapon::CanReload()
+    {
+    	bool b = false;
+    	b |= bEquipping;
+    	b |= bReload;
+    	b |= CurrentMagazineCount >= MaxMagazineCount;
+    	//b |= State->IsInventoryMode() == true;
+    	return !b;
+    }
+    
+    void ACWeapon::Reload()
+    {
+    	bReload = true;
+    	EndAim();
+    	EndFire();
+    
+    	if (ReloadMontage != nullptr)
+    		OwnerCharacter->PlayAnimMontage(ReloadMontage, ReloadPlayRate);
+    	
+    	CurrentMagazineCount = MaxMagazineCount;
+    
+    	if (ReloadSound != nullptr)
+    		UGameplayStatics::PlaySoundAtLocation(OwnerCharacter->GetWorld(), ReloadSound, FVector::ZeroVector, FRotator::ZeroRotator);
+    
+    }
+    
+    void ACWeapon::Eject_Magazine()
+    {
+    	if (MagazineBoneName.IsValid() == true)
+    		Mesh->HideBoneByName(MagazineBoneName, PBO_None);
+    	if (MagazineClass == nullptr)
+    		return;
+    
+    	FTransform transform = Mesh->GetSocketTransform(MagazineBoneName);
+    	ACMagazine* magazie = GetWorld()->SpawnActorDeferred<ACMagazine>(MagazineClass, transform, nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+    	magazie->SetEject();
+    	magazie->SetLifeSpan(5.0f);
+    	magazie->FinishSpawning(transform);
+    }
+    
+    void ACWeapon::Spawn_Magazine()
+    {
+    	if (MagazineClass == nullptr)
+    		return;
+    	FActorSpawnParameters param;
+    	param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    	Magazine = GetWorld()->SpawnActor<ACMagazine>(MagazineClass, param);
+    	Magazine->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), MagazinSocketName);
+    }
+    
+    void ACWeapon::Load_Magazine()
+    {
+    	CurrentMagazineCount = MaxMagazineCount;
+    	if (MagazineBoneName.IsValid() == true)
+    		Mesh->UnHideBoneByName(MagazineBoneName);
+    
+    	if (Magazine != nullptr)
+    		Magazine->Destroy();
+    }
+    
+    void ACWeapon::End_Magazine()
+    {
+    	bReload = false;
+    }
+    ```
+    
+- HitResult 기반 데칼, 파티클, Bullet 콜백을 포함한 **피격 연출 및 데미지 흐름 처리**
+- 코드
+    
+    ```cpp
+    void ACWeapon::OnFireing()
+    {
+    	....
+    	
+    	FVector start = transform.GetLocation() + direction;
+    
+    	direction = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(direction, RecoilAngle);
+    
+    	FVector end = transform.GetLocation() + direction * HitDistance;
+    
+    	TArray<AActor*> ignores;
+    	FHitResult hitResult;
+    
+    	UKismetSystemLibrary::LineTraceSingle(GetWorld(), start, end, ETraceTypeQuery::TraceTypeQuery1, false, ignores, Debug, hitResult, true, DebugColor);
+    	if (hitResult.bBlockingHit == true)
+    	{
+    		if (HitDecal != nullptr)
+    		{
+    			FRotator rotator = hitResult.ImpactNormal.Rotation();
+    			UDecalComponent* decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), HitDecal, HitDecalSize, hitResult.Location, rotator, HitDecalLifeTime);
+    			decal->SetFadeScreenSize(0);
+    		}
+    		if (HitParticle != nullptr)
+    		{
+    			FRotator rotator = UKismetMathLibrary::FindLookAtRotation(hitResult.Location, hitResult.TraceStart);
+    			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticle, hitResult.Location, rotator);
+    		}
+    	}
+    
+    	if (FlashParticle != nullptr)
+    		UGameplayStatics::SpawnEmitterAttached(FlashParticle, Mesh, "Muzzle", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+    	if (EjectParticle != nullptr)
+    		UGameplayStatics::SpawnEmitterAttached(EjectParticle, Mesh, "Eject", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+    	FVector muzzleLocation = Mesh->GetSocketLocation("Muzzle");
+    	if (FireSound != nullptr)
+    		UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, OwnerCharacter->GetMesh()->GetSocketLocation(L"pelvis"), OwnerCharacter->GetActorRotation(), 5);
+    	....
+    	}
+    ```
+    
+- 캐릭터 상태(StateComponent), 카메라(CameraComponent), 인벤토리와 연동하여
+    
+    → **무기–캐릭터–카메라의 통합 제어 구조 완성**
+    
 
-**도전 기능 (도전 요구 사항)**
+### ✔ 무기별 공격 방식
 
-- **보스전 시스템:**
-    - 보스 캐릭터 및 전용 UI(보스 체력바, 공격 경고 등)를 통한 특별 전투 경험 제공
-    - 체력에 따른 페이즈 전환과 보스 처치 시 특별 보상 시스템 도입
-- **고급 무기 시스템:**
-    - 부착물(조준경, 소음기, 확장 탄창 등)을 통한 무기 커스터마이징 및 다양한 전투 스타일 구현
-    - 희귀 무기 획득 조건과 특수 공격 메커니즘 적용
-- **인벤토리 시스템:**
-    - 무기, 탄약, 회복 아이템 등 다양한 아이템의 관리 및 사용을 위한 격자/슬롯 형식 UI
-    - 드래그 앤 드롭 방식과 퀵슬롯 기능을 통해 실시간 아이템 이동 및 사용 지원
+ACWeapon 베이스에서 **공격 판정 방식을 타입별로 분리**하여 구현했습니다.
 
-**정체성과 철학**
+- **라이플 / 권총**
+    
+    → LineTrace 기반 **Hitscan**으로 
+    
+- **칼(근접)**
+    
+    → SphereTrace를 이용해 근접 타격 범위 기반 판정
+    
+- **수류탄 / 투척 무기**
+    
+    → Physics Simulation + ProjectileMovement로
+    
+    → 포물선 궤도 및 충돌 기반 폭발 판정 구현
+    
 
-우리 프로젝트는 인간의 본질과 정체성에 대해 고민합니다.
+각 무기 타입은 같은 인터페이스로 동작하지만,
 
-- **정체성의 본질:** 유전자, 기억, 의지 중 어느 것이 우리를 정의하는가?
-- **기술의 윤리적 딜레마:** 생명공학이 인류의 한계를 넘나들 수 있는 열쇠인지, 아니면 존재 자체를 위협하는 위험인지에 대한 질문
-- **자유의지:** 운명에 맞서 싸우는 인간의 내밀한 투쟁과 선택의 자유를 경험할 수 있습니다
+**판정 방식만 독립적으로 확장할 수 있는 구조**로 설계되어 유지보수가 용이합니다.
 
---------------
+## 🧍‍♂️ **Character & Animation System**
+
+### ✔ 구현 내용
+
+## 💥 **Damage & Health System**
+
+### ✔ 설계 의도
+
+## ⚙ **Component Architecture**
+
+### ✔ 구현 내용
+
+# **Troubleshooting**
+
+### 1) 🎯 몽타주가 중첩 재생되면 이후 몽타주가 재생되지 않는 문제
+
+### 2) 🎯 수류탄이 자연스럽게 투척되지 않는 문제
+
+### 3) 🎯 SymBio의 스플라인 공격에 충돌이 적용되지 않는 문제
+
+# **Retrospective (느낀점)**
+
+# 게임 플레이 영상
 
 <p align="center">
   <a href="https://youtu.be/tJcozATuAgQ">
