@@ -30,9 +30,8 @@
 
 ### ✔ 구현 내용
 
-- 장착/해제, 왼손 그립 위치, 장착 애니메이션/사운드 등 **무기 장착 시스템 통합**
-- 코드 위치: 
-	- [무기 장착 시스템](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L140-184)
+#### ↳ 장착/해제, 왼손 그립 위치, 장착 애니메이션/사운드 등 **무기 장착 시스템 통합**
+- 코드: [무기 장착 시스템](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L140-L184)
 
     ```cpp
     bool ACWeapon::CanEquip()
@@ -81,9 +80,8 @@
     }
     ```
     
-- 카메라 FOV, 암 길이, 소켓 오프셋을 조절하는 **조준(Aim) 시스템 구현 (Timeline + Curve 기반)**
-- 코드
-    
+#### ↳ 카메라 FOV, 암 길이, 소켓 오프셋을 조절하는 **조준(Aim) 시스템 구현 (Timeline + Curve 기반)**
+- 코드: [조준(Aim) 시스템 구현](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L421-L474)
     ```cpp
     bool ACWeapon::CanAim()
     {
@@ -141,9 +139,8 @@
     
     ```
     
-- 단발/자동 사격, 반동(Recoil), 카메라 셰이크 등 **발사 시스템 전반 처리**
-- 코드
-    
+#### ↳ 단발/자동 사격, 반동(Recoil), 카메라 셰이크 등 **발사 시스템 전반 처리**
+- 코드: [**발사 시스템 전반 처리**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L239-L349)     
     ```cpp
     void ACWeapon::BeginFire()
     {
@@ -178,8 +175,8 @@
     	FVector direction{};
     	if (camera == nullptr)
     	{
-    		transform = Mesh->GetSocketTransform("Muzzle_Bullet");//camera->GetComponentToWorld();
-    		direction = transform.GetRotation().GetUpVector();//camera->GetForwardVector();
+    		transform = Mesh->GetSocketTransform("Muzzle_Bullet");
+    		direction = transform.GetRotation().GetUpVector();
     	}
     	else
     	{
@@ -258,9 +255,8 @@
     
     ```
     
-- 탄창 배출·장전·탄 수 관리 등 **탄창/재장전(Load/Unload) 시스템 구성**
-- 코드
-    
+#### ↳ 탄창 배출·장전·탄 수 관리 등 **탄창/재장전(Load/Unload) 시스템 구성**
+- 코드: [**탄창/재장전(Load/Unload) 시스템 구성**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L356-L419)	
     ```cpp
     bool ACWeapon::CanReload()
     {
@@ -268,7 +264,7 @@
     	b |= bEquipping;
     	b |= bReload;
     	b |= CurrentMagazineCount >= MaxMagazineCount;
-    	//b |= State->IsInventoryMode() == true;
+    	
     	return !b;
     }
     
@@ -328,9 +324,8 @@
     }
     ```
     
-- HitResult 기반 데칼, 파티클, Bullet 콜백을 포함한 **피격 연출 및 데미지 흐름 처리**
-- 코드
-    
+#### ↳ HitResult 기반 데칼, 파티클, Bullet 콜백을 포함한 **피격 연출 및 데미지 흐름 처리**
+- 코드: [**피격 연출 및 데미지 흐름 처리**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L263-L325)
     ```cpp
     void ACWeapon::OnFireing()
     {
@@ -369,12 +364,10 @@
     	if (FireSound != nullptr)
     		UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSound, OwnerCharacter->GetMesh()->GetSocketLocation(L"pelvis"), OwnerCharacter->GetActorRotation(), 5);
     	....
-    	}
+    }
     ```
     
-- 캐릭터 상태(StateComponent), 카메라(CameraComponent), 인벤토리와 연동하여
-    
-    → **무기–캐릭터–카메라의 통합 제어 구조 완성**
+#### ↳ 캐릭터 상태(StateComponent), 카메라(CameraComponent), 인벤토리와 연동하여 → **무기–캐릭터–카메라의 통합 제어 구조 완성**
     
 
 ### ✔ 무기별 공격 방식
