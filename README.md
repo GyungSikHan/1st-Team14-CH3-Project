@@ -31,8 +31,9 @@
 ### ✔ 구현 내용
 
 - 장착/해제, 왼손 그립 위치, 장착 애니메이션/사운드 등 **무기 장착 시스템 통합**
-- 코드
-    
+- 코드 위치: 
+	- [무기 장착 시스템](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L140-184)
+
     ```cpp
     bool ACWeapon::CanEquip()
     {
