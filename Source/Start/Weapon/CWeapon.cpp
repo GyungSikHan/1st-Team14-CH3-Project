@@ -232,7 +232,7 @@ bool ACWeapon::CanFire()
 	GEngine->AddOnScreenDebugMessage(1, 5, FColor::Blue, FString::Printf(L"fire %d, %d", bFiring, b));
 	b |= CurrentMagazineCount == 0;
 	GEngine->AddOnScreenDebugMessage(1, 5, FColor::Blue, FString::Printf(L"count %d, %d", CurrentMagazineCount == 0, b));
-	//b |= State->IsInventoryMode() == true;
+
 	return !b;
 }
 
@@ -269,8 +269,8 @@ void ACWeapon::OnFireing()
 	FVector direction{};
 	if (camera == nullptr)
 	{
-		transform = Mesh->GetSocketTransform("Muzzle_Bullet");//camera->GetComponentToWorld();
-		direction = transform.GetRotation().GetUpVector();//camera->GetForwardVector();
+		transform = Mesh->GetSocketTransform("Muzzle_Bullet");
+		direction = transform.GetRotation().GetUpVector();
 	}
 	else
 	{
@@ -359,7 +359,7 @@ bool ACWeapon::CanReload()
 	b |= bEquipping;
 	b |= bReload;
 	b |= CurrentMagazineCount >= MaxMagazineCount;
-	//b |= State->IsInventoryMode() == true;
+	
 	return !b;
 }
 
@@ -426,7 +426,6 @@ bool ACWeapon::CanAim()
 	b |= bFiring;
 	b |= Weapon->IsKnifeMode() == true;
 	b |= Weapon->IsGrenadeMode() == true;
-	//b |= State->IsInventoryMode() == true;
 	return !b;
 }
 
@@ -476,5 +475,4 @@ void ACWeapon::OnAiming(float Output)
 void ACWeapon::OnBullet(AActor* InCauser, ACharacter* InOtherCharacter)
 {
 	HitDatas[0].SnedDamage(OwnerCharacter, InCauser, InOtherCharacter);
-	//UGameplayStatics::ApplyDamage(InOtherCharacter, Damage, OwnerCharacter->GetController(), this,UDamageType::StaticClass());
 }
