@@ -356,17 +356,17 @@ void UCStatusComponent::HealStamina(float Amount)
 #### ↳ 장착/해제, 왼손 그립 위치, 장착 애니메이션/사운드 등 **무기 장착 시스템 통합**
 - 코드: [무기 장착 시스템](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L140-L184)
 
-<table>
+	<table>
     <tr>
         <td align="center">
-             <img src="Image/image8.png" width="400"><br>
+             <img src="Image/image8.png" width="600"><br>
             <em>재장전</em>
 		</td>
 		        <td align="center">
-             <img src="Image/image9.png" width="750"><br>
+             <img src="Image/image9.png" width="530"><br>
             <em>근접 공격</em>
 		</td>
-</table>
+	</table>
 
     ```cpp
     bool ACWeapon::CanEquip()
@@ -417,18 +417,17 @@ void UCStatusComponent::HealStamina(float Amount)
     
 #### ↳ 카메라 FOV, 암 길이, 소켓 오프셋을 조절하는 **조준(Aim) 시스템 구현 (Timeline + Curve 기반)**
 - 코드: [조준(Aim) 시스템 구현](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L421-L474)
-
-<table>
-    <tr>
-        <td align="center">
-             <img src="Image/image-2.png" width="400"><br>
-            <em>조준 기능 X</em>
-		</td>
-		        <td align="center">
-             <img src="Image/image-1.png" width="750"><br>
-            <em>조준 기능 O</em>
-		</td>
-</table>
+	<table>
+    	<tr>
+        	<td align="center">
+            	 <img src="Image/image-2.png" width="740"><br>
+            	<em>조준 기능 X</em>
+			</td>
+		    	<td align="center">
+            	<img src="Image/image-1.png" width="750"><br>
+            	<em>조준 기능 O</em>
+			</td>
+	</table>
 
     ```cpp
     bool ACWeapon::CanAim()
@@ -1109,3 +1108,6 @@ void ACGrenadesItem::Shoot(const ACharacter* OwnerCharacter, const FVector& InDi
 </table>
 
 # **Retrospective (느낀점)**
+- 첫 Unreal 팀 프로젝트를 제작하면서 팀원들과 의견이 달라 조율하는 과정에서 소통의 중요성을 깨닫는 계기가 되었음
+- 짧은 기간에 많은 기능을 구현하려다 보니 구현하지 못한 기능이나 디테일면에서 다소 아쉬웠지만 엔진 사용법을 다시 한번 익히는 경험이 되었음
+- 조장으로써 팀원들이 해결하지 못하는 문제를 같이 해결해 나가려 노력하면서 이전해 해보지 못했던 다른 사람의 코드를 읽고 분석하는 방법에 대해 배우게된 계기가 음
