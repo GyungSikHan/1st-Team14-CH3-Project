@@ -37,7 +37,6 @@ public:
 public:
 	void SnedDamage(APawn* InAttacker, AActor* InAttackCauser, APawn* InOther);
 	void PlayMontage(ACharacter* InOwner);
-	void PlaySound(ACharacter* InOwner);
 };
 
 USTRUCT(BlueprintType)

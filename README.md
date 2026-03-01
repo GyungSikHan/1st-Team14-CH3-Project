@@ -3,7 +3,7 @@
 # 🎥 게임 플레이 영상
 <p align="center">
   <a href="https://youtu.be/tJcozATuAgQ">
-    <img src="image.png" width="1000">
+    <img src="Image/image.png" width="1000">
   </a>
 </p>
 
@@ -24,8 +24,8 @@ https://drive.google.com/file/d/1wuGg5KNYLVXD0ZXs_h4th62TAfnBNP6L/view?usp=shari
 
 ## 🖼 In-Game Screenshot
 
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](Image/image-1.png)
+![alt text](Image/image-2.png)
 ---
 
 # **👨‍💻 My Key Contributions**
@@ -39,6 +39,26 @@ https://drive.google.com/file/d/1wuGg5KNYLVXD0ZXs_h4th62TAfnBNP6L/view?usp=shari
 
 - [무기 타입 판단](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp#L58-L160)
 	- 무기 장착 및 해제 트리거 발동시 현재 장착된 무기의 타입과 들어온 타입의 무기를 비교하여 같으면 장착 해제, 다르면 새로들어온 타입으로 무기를 교체하도록 구현
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image7.png" width="1000"><br>
+            <em>Weapon 등록</em>
+		</td>
+	</tr>
+</table>
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image8.png" width="600"><br>
+            <em>라이플</em>
+		</td>
+		        <td align="center">
+             <img src="Image/image9.png" width="540"><br>
+            <em>권총</em>
+		</td>
+</table>
+
 
 ```cpp
 void UCWeaponComponent::SetUnarmedMode()
@@ -132,6 +152,17 @@ void UCWeaponComponent::SetMode(EWeaponType InType)
 - [무기에게 명령 내리기](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp#L171-L253)
 	- 현재 장착 무기에게 명령을 내리는 함수들로 몽타주에 AnimNotify에서 호출하도록 구현
 	- 이를 통해 몽타주 등이 실행될 때 총알 발사, 카메라 효과, Two Bone IK등이 실행
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image10.png" width="400"><br>
+            <em>재장전</em>
+		</td>
+		        <td align="center">
+             <img src="Image/image11.png" width="750"><br>
+            <em>근접 공격</em>
+		</td>
+</table>
 
 ```cpp
 void UCWeaponComponent::Begin_Equip()
@@ -757,7 +788,7 @@ void ACWeapon::OnBullet(AActor* InCauser, ACharacter* InOtherCharacter)
 ```
 
 
-#### ↳ **칼(근접)** [근접 공격](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon_Knife.cpp#L63-L134)
+#### ↳ [근접 공격](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon_Knife.cpp#L63-L134)
 - Sphere Collition를 이용해 애니메이션 실행시 Collition과 충돌 체크
 - 충돌 감지시 데미지를 보내는 함수 호출
 ```cpp
@@ -797,12 +828,8 @@ void ACWeapon_Knife::DisableCollision()
 }
 ```
     
-#### ↳ **수류탄 / 투척 무기**
-    
-    → Physics Simulation + ProjectileMovement로
-    
-    → 포물선 궤도 및 충돌 기반 폭발 판정 구현
-
+#### ↳ [투척 무기](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon_Throw.cpp#L38-L92) 
+-  Physics Simulation + ProjectileMovement로 포물선 궤도 및 충돌 기반 폭발 판정 구현
 ```cpp
 void ACWeapon_Throw::DonAction()
 {
@@ -862,16 +889,12 @@ ACGrenadesItem* ACWeapon_Throw::GetAttached()
 
 ```
 
-## 🧍‍♂️ **Character & Animation System**
-
-### ✔ 구현 내용
-
-## 💥 **Damage & Health System**
+## 💥 **Damage & Health System**~
 
 ### ✔ 설계 의도
 
 #### ↳ [Damage System](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeaponStructures.cpp#L12-L24)
-- SnedDamage 함수를 통해 
+- FHitData 구조체를 만들어 Hit Montage, Damage 등에 대한 이벤트를 피격된 대상한태 넘길 수 있도록 구현
 ```cpp
 void FHitData::SnedDamage(APawn* InAttacker, AActor* InAttackCauser, APawn* InOther)
 {
@@ -887,33 +910,6 @@ void FHitData::PlayMontage(ACharacter* InOwner)
 	InOwner->PlayAnimMontage(HitMontage,PlayRate);
 }
 ```
-
-
-```cpp
-void ACWeapon::OnBullet(AActor* InCauser, ACharacter* InOtherCharacter)
-{
-	HitDatas[0].SnedDamage(OwnerCharacter, InCauser, InOtherCharacter);
-}
-/////////////////////////////////////////////////////////////////////////////
-void ACWeapon_Knife::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if(OtherActor == nullptr)
-		return;
-	APawn* other = Cast<APawn>(OtherActor);
-	if(other == nullptr || other == OwnerCharacter)
-		return;
-	for (APawn* hitted : Hits)
-		if(hitted == other)
-			return;
-
-	Hits.AddUnique(other);
-	if(Hits.Num() <= 0)
-		return;
-	HitDatas[Index].SnedDamage(OwnerCharacter, this, other);
-}
-```
-
 
 # **Troubleshooting**
 
@@ -1023,11 +1019,11 @@ void ACGrenadesItem::Shoot(const ACharacter* OwnerCharacter, const FVector& InDi
  <table>
     <tr>
         <td align="center">
-             <img src="image-4.png" width="600"><br>
+             <img src="Image/image-4.png" width="600"><br>
             <em>Blueprint</em>
 		</td>
 		        <td align="center">
-             <img src="image-3.png" width="400"><br>
+             <img src="Image/image-3.png" width="400"><br>
             <em>Skill 사용</em>
 		</td>
 </table>

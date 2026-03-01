@@ -23,8 +23,4 @@ void FHitData::PlayMontage(ACharacter* InOwner)
 	InOwner->PlayAnimMontage(HitMontage,PlayRate);
 }
 
-void FHitData::PlaySound(ACharacter* InOwner)
-{
-}
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
