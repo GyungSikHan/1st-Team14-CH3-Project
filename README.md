@@ -1,3 +1,50 @@
+# **SYMBIO Project**
+<table>
+	<tr>
+		<td align="center">
+			<img src="Image/image15.png" width="1000"><br>
+			<em>Title</em>
+		</td>
+	</tr>
+</table>
+
+## 📌 Table of Contents
+
+- [⚡ 30초 요약 (TL;DR)](#-30초-요약-tldr)
+- [🎥 게임 플레이 영상](#-게임-플레이-영상)
+- [📌 프로젝트 소개](#-프로젝트-소개)
+- [🎮 게임 개발](#-게임-개발)
+- [🎮 포트폴리오 링크](#-포트폴리오-링크)
+- [🖼 In-Game Screenshot](#-in-game-screenshot)
+- [👨‍💻 My Key Contributions](#-my-key-contributions)
+  - [Component](#component)
+	- [↳ WeaponComponent](#-weaponcomponent)
+		- [무기 타입 판단](#무기-타입-판단)
+		- [무기에게 명령 내리기](#무기에게-명령-내리기)
+	- [↳ StatusComponent](#-statuscomponent)
+	- [↳ 그 외에 Component](#-그-외에-component)
+  - [Weapon System](#-weapon-system)
+  	- [↳ 무기 장착 시스템 통합](#-장착해제-왼손-그립-위치-장착-애니메이션사운드-등-무기-장착-시스템-통합)
+	- [↳ 조준(Aim) 시스템](#-카메라-fov-암-길이-소켓-오프셋을-조절하는-조준aim-시스템-구현-timeline--curve-기반)
+	- [↳ 단발/자동 사격 시스템 처리](#-단발자동-사격-반동recoil-카메라-셰이크-등-발사-시스템-전반-처리)
+	- [↳ 탄창/재장전(Load/Unload) 시스템](#-탄창-배출장전탄-수-관리-등-탄창재장전loadunload-시스템-구성)
+	- [↳ HitResult 기반 데미지 흐름 처리](#-hitresult-기반-데칼-파티클-bullet-콜백을-포함한-피격-연출-및-데미지-흐름-처리)
+   - [✔ 무기별 공격 방식](#-무기별-공격-방식)
+	 - [↳ 라이플 / 권총](#-라이플--권총)
+	 	- [총 발사 로직](#총-발사-로직)
+		- [총알 충돌](#총알-발사-및-충돌)
+	    - [데미지 처리](#데미지-처리)
+	- [↳ 근접 공격](#-근접-공격)
+	- [↳ 투척 무기](#-투척-무기)
+- [💥 Damage & Health System](#-damage--health-system)
+	- [↳ Damage System](#-damage-system)
+- [Troubleshooting](#troubleshooting)
+	- [1) 🎯 몽타주가 중첩 재생되면 이후 몽타주가 재생되지 않는 문제](#1--몽타주가-중첩-재생되면-이후-몽타주가-재생되지-않는-문제)
+	- [2) 🎯 수류탄이 자연스럽게 투척되지 않는 문제](#2--수류탄이-자연스럽게-투척되지-않는-문제)
+	- [3) 🎯 SymBio의 스플라인 공격에 충돌이 적용되지 않는 문제](#3--symbio의-스플라인-공격에-충돌이-적용되지-않는-문제)
+- [Retrospective (느낀점)](#retrospective-느낀점)
+
+
 # ⚡ 30초 요약 (TL;DR)
 
 # 🎥 게임 플레이 영상
@@ -6,9 +53,6 @@
     <img src="Image/image.png" width="1000">
   </a>
 </p>
-
-# 🎮 포트폴리오 링크
-https://drive.google.com/file/d/1wuGg5KNYLVXD0ZXs_h4th62TAfnBNP6L/view?usp=sharing
 
 # 📌 프로젝트 소개
 
@@ -21,6 +65,9 @@ https://drive.google.com/file/d/1wuGg5KNYLVXD0ZXs_h4th62TAfnBNP6L/view?usp=shari
 > - **목적**: 언리얼 엔진의 **Gameplay Framework**와 **Component 기반 구조**를 이해하고, C++과 Blueprint 기반으로 FPS 게임의 핵심 시스템(무기, 캐릭터, 데미지)을 직접 구현하는 경험을 목표로 함.
 > - **기술**: C++, Unreal Engine 5.5, Blueprint, Git, Slack, Rider/Visual Studio
 </aside>
+
+# 🎮 포트폴리오 링크
+https://drive.google.com/file/d/1wuGg5KNYLVXD0ZXs_h4th62TAfnBNP6L/view?usp=sharing
 
 ## 🖼 In-Game Screenshot
 
@@ -37,7 +84,7 @@ https://drive.google.com/file/d/1wuGg5KNYLVXD0ZXs_h4th62TAfnBNP6L/view?usp=shari
 ### ✔ 구현 내용
 #### ↳ [WeaponComponent](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp)
 
-- [무기 타입 판단](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp#L58-L160)
+- #### [무기 타입 판단](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp#L58-L160)
 	- 무기 장착 및 해제 트리거 발동시 현재 장착된 무기의 타입과 들어온 타입의 무기를 비교하여 같으면 장착 해제, 다르면 새로들어온 타입으로 무기를 교체하도록 구현
 <table>
     <tr>
@@ -149,7 +196,7 @@ void UCWeaponComponent::SetMode(EWeaponType InType)
 
 ```
 
-- [무기에게 명령 내리기](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp#L171-L253)
+- #### [무기에게 명령 내리기](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Components/CWeaponComponent.cpp#L171-L253)
 	- 현재 장착 무기에게 명령을 내리는 함수들로 몽타주에 AnimNotify에서 호출하도록 구현
 	- 이를 통해 몽타주 등이 실행될 때 총알 발사, 카메라 효과, Two Bone IK등이 실행
 <table>
@@ -737,7 +784,7 @@ void UCStatusComponent::HealStamina(float Amount)
 트리거 방식이 다른 무기들을 일관된 인터페이스(ACWeapon)를 유지하고 다형성을 활용한 로직 구현
 
 #### ↳ **라이플 / 권총**
-- [총 발사 로직](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L263-L354)
+- #### [총 발사 로직](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L263-L354)
 	- LineTrace를 활용하여 총을 쏘는 순간 조준한 방향, 충돌 위치를 판단하여 총알을 발사
 	- 총알 발사 전 Bullet Class에 있는 델리게이트에 OnBullet 함수 바인딩
 
@@ -798,7 +845,7 @@ void ACWeapon::OnFireing()
 	....
 }
 ```
-- [총알 발사 및 충돌](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CBullet.cpp#L50-L71)
+- #### [총알 발사 및 충돌](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CBullet.cpp#L50-L71)
 	-  ACWeapon Class에서 Shoot 함수 호출시 넘겨준 매개변수를 이용해 총알이 날아갈 방향 지정 후 Projectile에 설정된 Speed와 연산하여 총알 발사
 	- 총알에 심어둔 Capsule Collition에 충돌시 OnComponentHit 함수를 호출하여 중복 충돌과 ACharacter 클래스가 아닌지 판단하여 데미지를 주도록 델리게이트 호출
 <table>
@@ -833,7 +880,7 @@ void ACBullet::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherAc
 	Destroy();
 }
 ```
-- [데미지 처리](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L475-L478)
+- #### [데미지 처리](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L475-L478)
 	- 총알에서 델리게이트 호출시 ACWeapon::OnBullet 함수를 호출하여 데미지 처리
 ```cpp
 void ACWeapon::OnBullet(AActor* InCauser, ACharacter* InOtherCharacter)
@@ -963,9 +1010,8 @@ ACGrenadesItem* ACWeapon_Throw::GetAttached()
 ## 💥 **Damage & Health System**~
 
 ### ✔ 설계 의도
-
-#### ↳ [Damage System](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeaponStructures.cpp#L12-L24)
 - FHitData 구조체를 만들어 Hit Montage, Damage 등에 대한 이벤트를 피격된 대상한태 넘길 수 있도록 구현
+#### ↳ [Damage System](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeaponStructures.cpp#L12-L24)
 <table>
     <tr>
         <td align="center">
