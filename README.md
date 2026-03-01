@@ -356,6 +356,18 @@ void UCStatusComponent::HealStamina(float Amount)
 #### ↳ 장착/해제, 왼손 그립 위치, 장착 애니메이션/사운드 등 **무기 장착 시스템 통합**
 - 코드: [무기 장착 시스템](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L140-L184)
 
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image8.png" width="400"><br>
+            <em>재장전</em>
+		</td>
+		        <td align="center">
+             <img src="Image/image9.png" width="750"><br>
+            <em>근접 공격</em>
+		</td>
+</table>
+
     ```cpp
     bool ACWeapon::CanEquip()
     {
@@ -405,6 +417,19 @@ void UCStatusComponent::HealStamina(float Amount)
     
 #### ↳ 카메라 FOV, 암 길이, 소켓 오프셋을 조절하는 **조준(Aim) 시스템 구현 (Timeline + Curve 기반)**
 - 코드: [조준(Aim) 시스템 구현](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L421-L474)
+
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image-2.png" width="400"><br>
+            <em>조준 기능 X</em>
+		</td>
+		        <td align="center">
+             <img src="Image/image-1.png" width="750"><br>
+            <em>조준 기능 O</em>
+		</td>
+</table>
+
     ```cpp
     bool ACWeapon::CanAim()
     {
@@ -464,6 +489,16 @@ void UCStatusComponent::HealStamina(float Amount)
     
 #### ↳ 단발/자동 사격, 반동(Recoil), 카메라 셰이크 등 **발사 시스템 전반 처리**
 - 코드: [**발사 시스템 전반 처리**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L239-L349)     
+
+<table>
+    <tr>
+        <td align="center">
+            <img src="Image/image12.png" width="600"><br>
+            <em>단발/자동 사격 키 매핑</em>
+		</td>
+</table>
+
+
     ```cpp
     void ACWeapon::BeginFire()
     {
@@ -580,6 +615,14 @@ void UCStatusComponent::HealStamina(float Amount)
     
 #### ↳ 탄창 배출·장전·탄 수 관리 등 **탄창/재장전(Load/Unload) 시스템 구성**
 - 코드: [**탄창/재장전(Load/Unload) 시스템 구성**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L356-L419)	
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image10.png" width="400"><br>
+            <em>재장전</em>
+		</td>
+</table>
+
     ```cpp
     bool ACWeapon::CanReload()
     {
@@ -689,11 +732,6 @@ void UCStatusComponent::HealStamina(float Amount)
     	....
     }
     ```
-    
-#### 캐릭터 상태(StateComponent), 카메라(CameraComponent), 인벤토리와 연동하여
-    
-    → **무기–캐릭터–카메라의 통합 제어 구조 완성**
-    
 
 ### ✔ 무기별 공격 방식
 
@@ -703,6 +741,16 @@ void UCStatusComponent::HealStamina(float Amount)
 - [총 발사 로직](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L263-L354)
 	- LineTrace를 활용하여 총을 쏘는 순간 조준한 방향, 충돌 위치를 판단하여 총알을 발사
 	- 총알 발사 전 Bullet Class에 있는 델리게이트에 OnBullet 함수 바인딩
+
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image13.png" width="600"><br>
+            <em>라이플 발사</em>
+		</td>
+</table>
+
+
 ```cpp
 void ACWeapon::OnFireing()
 {
@@ -754,6 +802,14 @@ void ACWeapon::OnFireing()
 - [총알 발사 및 충돌](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CBullet.cpp#L50-L71)
 	-  ACWeapon Class에서 Shoot 함수 호출시 넘겨준 매개변수를 이용해 총알이 날아갈 방향 지정 후 Projectile에 설정된 Speed와 연산하여 총알 발사
 	- 총알에 심어둔 Capsule Collition에 충돌시 OnComponentHit 함수를 호출하여 중복 충돌과 ACharacter 클래스가 아닌지 판단하여 데미지를 주도록 델리게이트 호출
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image14.png" width="600"><br>
+            <em>AI 피격</em>
+		</td>
+</table>
+
 ```c++
 void ACBullet::Shoot(const FVector& InDirection)
 {
@@ -791,6 +847,14 @@ void ACWeapon::OnBullet(AActor* InCauser, ACharacter* InOtherCharacter)
 #### ↳ [근접 공격](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon_Knife.cpp#L63-L134)
 - Sphere Collition를 이용해 애니메이션 실행시 Collition과 충돌 체크
 - 충돌 감지시 데미지를 보내는 함수 호출
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image11.png" width="600"><br>
+            <em>근접 공격</em>
+		</td>
+</table>
+
 ```cpp
 void ACWeapon_Knife::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -830,6 +894,14 @@ void ACWeapon_Knife::DisableCollision()
     
 #### ↳ [투척 무기](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon_Throw.cpp#L38-L92) 
 -  Physics Simulation + ProjectileMovement로 포물선 궤도 및 충돌 기반 폭발 판정 구현
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image15.png" width="600"><br>
+            <em>투척 무기 투척</em>
+		</td>
+</table>
+
 ```cpp
 void ACWeapon_Throw::DonAction()
 {
@@ -895,6 +967,14 @@ ACGrenadesItem* ACWeapon_Throw::GetAttached()
 
 #### ↳ [Damage System](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeaponStructures.cpp#L12-L24)
 - FHitData 구조체를 만들어 Hit Montage, Damage 등에 대한 이벤트를 피격된 대상한태 넘길 수 있도록 구현
+<table>
+    <tr>
+        <td align="center">
+             <img src="Image/image17.png" width="600"><br>
+            <em>Hit Montage 재생</em>
+		</td>
+</table>
+
 ```cpp
 void FHitData::SnedDamage(APawn* InAttacker, AActor* InAttackCauser, APawn* InOther)
 {
@@ -1023,7 +1103,7 @@ void ACGrenadesItem::Shoot(const ACharacter* OwnerCharacter, const FVector& InDi
             <em>Blueprint</em>
 		</td>
 		        <td align="center">
-             <img src="Image/image-3.png" width="400"><br>
+             <img src="Image/image-3.png" width="390"><br>
             <em>Skill 사용</em>
 		</td>
 </table>
