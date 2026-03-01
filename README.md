@@ -3,7 +3,6 @@
 	<tr>
 		<td align="center">
 			<img src="Image/image15.png" width="1000"><br>
-			<em>Title</em>
 		</td>
 	</tr>
 </table>
