@@ -555,7 +555,7 @@ void UCStatusComponent::HealStamina(float Amount)
 </table>
 
 
-    ```cpp
+```cpp
     void ACWeapon::BeginFire()
     {
     	bFiring = true;
@@ -667,7 +667,7 @@ void UCStatusComponent::HealStamina(float Amount)
     	}
     }
     
-    ```
+```
     
 #### ↳ 탄창 배출·장전·탄 수 관리 등 **탄창/재장전(Load/Unload) 시스템 구성**
 - 코드: [**탄창/재장전(Load/Unload) 시스템 구성**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L356-L419)	
@@ -679,7 +679,7 @@ void UCStatusComponent::HealStamina(float Amount)
 		</td>
 </table>
 
-    ```cpp
+```cpp
     bool ACWeapon::CanReload()
     {
     	bool b = false;
@@ -744,7 +744,7 @@ void UCStatusComponent::HealStamina(float Amount)
     {
     	bReload = false;
     }
-    ```
+```
     
 #### ↳ HitResult 기반 데칼, 파티클, Bullet 콜백을 포함한 **피격 연출 및 데미지 흐름 처리**
 - 코드: [**피격 연출 및 데미지 흐름 처리**](https://github.com/GyungSikHan/1st-Team14-CH3-Project/blob/main/Source/Start/Weapon/CWeapon.cpp#L263-L325)
